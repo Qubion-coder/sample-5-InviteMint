@@ -1,35 +1,28 @@
-import React from 'react';
+import { Music, Music2 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { Music, VolumeX } from 'lucide-react';
 
 interface MusicControlProps {
   isMusicPlaying: boolean;
   toggleMusic: () => void;
 }
 
-export const MusicControl: React.FC<MusicControlProps> = ({ isMusicPlaying, toggleMusic }) => {
+export function MusicControl({ isMusicPlaying, toggleMusic }: MusicControlProps) {
   return (
-    <motion.button
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 1, duration: 1 }}
+    <button
       onClick={toggleMusic}
-      className="fixed bottom-6 right-6 z-40 w-12 h-12 bg-brand-ivory border border-brand-champagne rounded-full flex items-center justify-center shadow-sm hover:scale-105 transition-transform duration-300 group"
+      className="w-12 h-12 rounded-full border border-brand-champagne bg-brand-obsidian flex items-center justify-center text-brand-champagne hover:bg-brand-champagne hover:text-brand-obsidian transition-colors duration-300 shadow-xl"
+      aria-label={isMusicPlaying ? "Pause music" : "Play music"}
     >
-      {/* Subtle animation around icon when playing */}
-      {isMusicPlaying && (
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 border border-brand-champagne/50 rounded-full"
-        />
-      )}
-      
       {isMusicPlaying ? (
-        <Music className="w-4 h-4 text-brand-dark" />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+        >
+          <Music2 size={18} />
+        </motion.div>
       ) : (
-        <VolumeX className="w-4 h-4 text-brand-sage-deep opacity-60" />
+        <Music size={18} />
       )}
-    </motion.button>
+    </button>
   );
-};
+}

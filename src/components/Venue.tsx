@@ -1,36 +1,33 @@
-import React from 'react';
 import { motion } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 
-export const Venue: React.FC = () => {
+export function Venue() {
   return (
-    <section id="venue" className="w-full py-32 sm:py-48 bg-brand-ivory flex flex-col items-center">
-      <div className="w-full max-w-[1200px] px-6 relative flex flex-col items-center">
-        
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="w-full aspect-[4/3] sm:aspect-[21/9] overflow-hidden"
-        >
-          <img 
-            src="/venue-background.jpg" 
-            alt="The Grand Garden Ballroom" 
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+    <section className="h-screen w-full relative overflow-hidden">
+      <div className="absolute inset-0 cinematic-overlay z-10"></div>
+      
+      <motion.img 
+        initial={{ scale: 1.1 }}
+        whileInView={{ scale: 1 }}
+        transition={{ duration: 2, ease: "easeOut" }}
+        viewport={{ once: true }}
+        src="/venue-bg.jpg"
+        alt="The Grand Ballroom"
+        className="w-full h-full object-cover object-center grayscale-[20%] contrast-110 brightness-[0.75]"
+      />
 
+      <div className="absolute inset-0 z-20 flex flex-col justify-end p-8 md:p-16 lg:p-24 pb-24 md:pb-32 bg-gradient-to-t from-brand-obsidian/90 via-transparent to-transparent">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="bg-brand-ivory/95 backdrop-blur-sm p-12 sm:p-16 text-center w-[90%] sm:w-auto -mt-16 sm:-mt-24 relative z-10 mx-auto"
+          transition={{ duration: 1, delay: 0.2 }}
         >
-          <h3 className="font-serif text-brand-dark text-3xl sm:text-4xl lg:text-5xl font-light mb-2">
-            THE GRAND GARDEN BALLROOM
-          </h3>
-          <p className="font-serif text-brand-sage-deep text-lg sm:text-xl italic mb-10">
+          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl text-brand-ivory uppercase tracking-widest font-light mb-4 text-shadow-dark">
+            The Grand<br/><span className="italic text-brand-champagne">Ballroom</span>
+          </h2>
+          
+          <p className="font-sans text-xs md:text-sm tracking-[0.4em] text-brand-ivory uppercase mb-12 text-shadow-dark">
             Colombo, Sri Lanka
           </p>
 
@@ -38,13 +35,13 @@ export const Venue: React.FC = () => {
             href="https://maps.google.com" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-block bg-brand-ivory border border-brand-champagne text-brand-dark font-sans uppercase tracking-[0.2em] text-[10px] sm:text-xs px-10 py-4 hover:bg-brand-champagne/10 transition-colors duration-300"
+            className="group inline-flex items-center gap-4 border border-brand-champagne px-8 py-4 text-brand-champagne font-sans text-xs md:text-sm tracking-[0.3em] uppercase hover:bg-brand-champagne hover:text-brand-obsidian transition-all duration-500 backdrop-blur-sm bg-brand-obsidian/30"
           >
-            VIEW LOCATION
+            <span>View Location</span>
+            <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-2" />
           </a>
         </motion.div>
-
       </div>
     </section>
   );
-};
+}

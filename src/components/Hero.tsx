@@ -1,90 +1,88 @@
-import React from 'react';
 import { motion } from 'motion/react';
 
-export const Hero: React.FC = () => {
+export function Hero() {
   return (
-    <section id="home" className="relative w-full h-[100svh] lg:h-screen flex flex-col items-center justify-center overflow-hidden bg-brand-ivory">
-      
-      {/* User-provided hero background image */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/hero-background.jpg" 
-          alt="Hero Background" 
-          className="w-full h-full object-cover"
-        />
-        {/* Subtle overlay to ensure text is readable */}
-        <div className="absolute inset-0 bg-brand-ivory/30 mix-blend-overlay" />
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-20 flex flex-col items-center text-center px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="text-brand-sage-deep font-sans uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[9px] sm:text-[11px] font-semibold mb-8 sm:mb-12"
-        >
-          TOGETHER WITH THEIR FAMILIES
-        </motion.p>
-
+    <section className="min-h-screen relative flex flex-col md:flex-row w-full overflow-hidden">
+      {/* Desktop Layout - Left 45% Typography */}
+      <div className="hidden md:flex w-[45%] bg-brand-obsidian flex-col justify-end p-12 lg:p-20 z-10 relative">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.7 }}
-          className="flex flex-col items-center mb-8 sm:mb-12"
-        >
-          <h1 className="font-serif text-brand-dark text-6xl sm:text-7xl lg:text-8xl leading-none font-light tracking-wide">
-            Olivia
-          </h1>
-          <span className="font-serif text-brand-dark italic text-4xl sm:text-5xl lg:text-6xl font-light my-2">
-            &
-          </span>
-          <h1 className="font-serif text-brand-dark text-6xl sm:text-7xl lg:text-8xl leading-none font-light tracking-wide">
-            Alexander
-          </h1>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.9 }}
-          className="flex flex-col items-center"
+          transition={{ duration: 1.2, delay: 0.2 }}
+          className="flex flex-col gap-6"
         >
-          <p className="font-sans text-brand-dark uppercase tracking-[0.2em] text-[10px] sm:text-xs mb-8 max-w-sm leading-relaxed">
-            INVITE YOU TO CELEBRATE<br />
-            THE BEGINNING OF THEIR FOREVER
+          <p className="text-[10px] tracking-[0.4em] text-brand-champagne uppercase font-sans">
+            A Celebration of Love
           </p>
+          
+          <h1 className="font-serif text-6xl lg:text-7xl xl:text-[6.5rem] uppercase font-light leading-[0.9]">
+            <span className="block mb-4">Olivia</span>
+            <span className="block text-brand-champagne font-serif italic text-5xl lg:text-6xl xl:text-[5.5rem] my-2">&amp;</span>
+            <span className="block">Alexander</span>
+          </h1>
 
-          <div className="w-16 h-[1px] bg-brand-sage mb-8" />
+          <div className="h-[1px] w-12 bg-brand-champagne my-6"></div>
 
-          <div className="flex flex-col items-center gap-2 font-sans text-brand-dark uppercase tracking-[0.2em] text-[10px] sm:text-xs">
-            <p>SATURDAY · 14 NOVEMBER 2026</p>
-            <div className="w-1 h-1 rounded-full bg-brand-champagne my-2" />
-            <p>6:00 PM</p>
-            <div className="w-1 h-1 rounded-full bg-brand-champagne my-2" />
-            <p>THE GRAND GARDEN BALLROOM</p>
-            <p>COLOMBO, SRI LANKA</p>
+          <div className="font-sans text-xs tracking-[0.2em] text-brand-ivory/80 uppercase space-y-3 flex flex-col">
+            <span className="font-serif italic text-brand-champagne text-xl lowercase tracking-normal">request the pleasure of your company</span>
+            <span className="opacity-60 text-[10px]">on the occasion of their wedding</span>
+          </div>
+
+          <div className="mt-12 flex flex-col gap-2 font-sans text-xs tracking-[0.3em] text-brand-ivory/60">
+            <span>14.11.2026</span>
+            <span>COLOMBO · SRI LANKA</span>
           </div>
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20"
-      >
-        <span className="font-sans uppercase tracking-[0.3em] text-brand-sage-deep text-[8px] sm:text-[9px]">
-          SCROLL TO EXPLORE
-        </span>
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-[1px] h-10 bg-brand-sage"
+      {/* Desktop Layout - Right 55% Image */}
+      <div className="hidden md:block w-[55%] h-screen relative">
+        <div className="absolute inset-0 cinematic-overlay z-10"></div>
+        <img 
+          src="/hero-bg-custom.png"
+          alt="Luxury Wedding Venue"
+          className="w-full h-full object-cover grayscale-[40%] contrast-[1.1] brightness-75"
         />
-      </motion.div>
+      </div>
 
+      {/* Mobile Design */}
+      <div className="w-full h-screen relative md:hidden flex flex-col justify-end p-6 pb-24">
+        <img 
+          src="/hero-bg-custom.png"
+          alt="Luxury Wedding Venue"
+          className="absolute inset-0 w-full h-full object-cover grayscale-[40%] contrast-[1.1] brightness-[0.6]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-obsidian via-brand-obsidian/70 to-transparent z-10"></div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.2 }}
+          className="relative z-20 flex flex-col gap-4"
+        >
+          <p className="text-[9px] tracking-[0.4em] text-brand-champagne uppercase font-sans">
+            A Celebration of Love
+          </p>
+          
+          <h1 className="font-serif text-6xl uppercase font-light leading-none">
+            <span className="block mb-2">Olivia</span>
+            <span className="block text-brand-champagne font-serif italic text-4xl my-1">&amp;</span>
+            <span className="block">Alexander</span>
+          </h1>
+
+          <div className="h-[1px] w-8 bg-brand-champagne my-3"></div>
+
+          <div className="font-sans text-[10px] tracking-[0.2em] text-brand-ivory/80 uppercase flex flex-col gap-2">
+            <span className="font-serif italic text-brand-champagne text-lg lowercase tracking-normal">request the pleasure of your company</span>
+            <span className="opacity-60 text-[9px]">on the occasion of their wedding</span>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-1 font-sans text-[10px] tracking-[0.3em] text-brand-ivory/60">
+            <span>14.11.2026</span>
+            <span>COLOMBO · SRI LANKA</span>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
-};
+}

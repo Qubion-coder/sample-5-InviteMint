@@ -1,105 +1,47 @@
-import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 
-export const TheDate: React.FC = () => {
-  const targetDate = new Date("2026-11-14T18:00:00");
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
-
-      if (distance < 0) {
-        clearInterval(timer);
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000)
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const TimeBlock = ({ value, label }: { value: number, label: string }) => (
-    <div className="flex flex-col items-center justify-center w-16 sm:w-24">
-      <span className="font-serif text-brand-dark text-3xl sm:text-4xl font-light leading-none mb-2">
-        {String(value).padStart(2, '0')}
-      </span>
-      <span className="font-sans uppercase tracking-[0.2em] text-brand-sage-deep text-[8px] sm:text-[9px] font-semibold">
-        {label}
-      </span>
-    </div>
-  );
-
+export function TheDate() {
   return (
-    <section id="the-day" className="w-full py-32 sm:py-48 bg-brand-ivory relative overflow-hidden">
+    <section className="min-h-screen bg-brand-soft-black flex flex-col justify-center relative overflow-hidden px-6 md:px-16 lg:px-24 py-24">
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/part3-bg.png" 
+          alt="Table Setting" 
+          className="w-full h-full object-cover object-center grayscale-[20%] contrast-110 brightness-[0.55]"
+        />
+        <div className="absolute inset-0 bg-brand-obsidian/50 backdrop-blur-[1px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-soft-black/90 via-transparent to-brand-soft-black/90"></div>
+      </div>
 
-
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-32">
-          
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1 }}
-            className="md:w-1/2 text-center md:text-right"
-          >
-            <h2 className="font-serif text-brand-dark text-4xl sm:text-5xl lg:text-6xl font-light">
-              THE DAY
-            </h2>
-          </motion.div>
-          
-          <div className="hidden md:block w-[1px] h-32 bg-brand-champagne/40" />
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1 }}
-            className="md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start"
-          >
-            <div className="font-serif text-brand-dark text-[8rem] sm:text-[10rem] lg:text-[12rem] leading-none mb-4 font-light">
-              14
-            </div>
-            <div className="font-sans uppercase tracking-[0.3em] text-brand-sage-deep text-sm sm:text-base space-y-2">
-              <p>NOVEMBER 2026</p>
-              <p>SATURDAY</p>
-            </div>
-          </motion.div>
-
-        </div>
-
-        {/* Simple Countdown */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="mt-24 sm:mt-32 flex justify-center"
+          transition={{ duration: 1, delay: 0.2 }}
+          className="flex flex-col gap-8 py-12 md:py-32 text-center bg-brand-soft-black/40 backdrop-blur-md px-12 md:px-32 py-16 rounded-2xl border border-brand-champagne/10 shadow-2xl"
         >
-          <div className="flex items-center gap-2 sm:gap-6 border-t border-brand-champagne/40 pt-12">
-            <TimeBlock value={timeLeft.days} label="DAYS" />
-            <div className="w-[1px] h-8 sm:h-12 bg-brand-champagne/40" />
-            <TimeBlock value={timeLeft.hours} label="HOURS" />
-            <div className="w-[1px] h-8 sm:h-12 bg-brand-champagne/40" />
-            <TimeBlock value={timeLeft.minutes} label="MINUTES" />
-            <div className="w-[1px] h-8 sm:h-12 bg-brand-champagne/40" />
-            <TimeBlock value={timeLeft.seconds} label="SECONDS" />
+          <div>
+            <p className="font-sans text-[10px] md:text-xs tracking-[0.4em] text-brand-champagne uppercase mb-3 text-shadow-dark">Month</p>
+            <p className="font-serif text-4xl md:text-5xl lg:text-6xl text-brand-ivory uppercase tracking-widest text-shadow-dark">November</p>
+            <p className="font-sans text-xs md:text-sm tracking-[0.3em] text-brand-ivory/80 uppercase mt-3 text-shadow-dark">2026</p>
+          </div>
+          
+          <div className="h-[1px] w-12 bg-brand-champagne/50 mx-auto"></div>
+
+          <div>
+            <p className="font-sans text-[10px] md:text-xs tracking-[0.4em] text-brand-champagne uppercase mb-3 text-shadow-dark">Day</p>
+            <p className="font-serif text-3xl md:text-4xl text-brand-ivory uppercase tracking-widest text-shadow-dark">Saturday</p>
+          </div>
+
+          <div className="h-[1px] w-12 bg-brand-champagne/50 mx-auto"></div>
+
+          <div>
+            <p className="font-sans text-[10px] md:text-xs tracking-[0.4em] text-brand-champagne uppercase mb-3 text-shadow-dark">Time</p>
+            <p className="font-serif text-3xl md:text-4xl text-brand-ivory uppercase tracking-widest text-shadow-dark">6:00 PM</p>
           </div>
         </motion.div>
       </div>
     </section>
   );
-};
+}

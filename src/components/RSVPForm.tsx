@@ -1,161 +1,118 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle, Loader2, Heart, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { motion } from 'motion/react';
+import { X, Check } from 'lucide-react';
+import { toast } from 'sonner';
 
-export const RSVPForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    guests: '1',
-    dietaryNotes: '',
-  });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+interface RSVPFormProps {
+  onClose: () => void;
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
+export function RSVPForm({ onClose }: RSVPFormProps) {
+  const [attendance, setAttendance] = useState<'accepts' | 'declines' | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('loading');
-
-    try {
-      // Simulate network request latency
-      await new Promise(resolve => setTimeout(resolve, 800));
-
-      setStatus('success');
-      setFormData({ fullName: '', guests: '1', dietaryNotes: '' });
-    } catch (error) {
-      console.error('Error sending RSVP: ', error);
-      setStatus('error');
-    }
+    toast.success("Thank you for your response");
+    setTimeout(onClose, 1000);
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 relative py-4">
-      {/* Premium ambient backdrop & glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-radial from-brand-gold/15 to-transparent rounded-full blur-[100px] pointer-events-none -z-10" />
-
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="glass p-8 sm:p-10 lg:p-12 rounded-[3rem] border border-white/40 shadow-[0_30px_60px_rgba(197,160,89,0.1)] relative overflow-hidden bg-white/60 backdrop-blur-3xl lg:flex items-center gap-16"
-      >
-        {/* Soft top border line */}
-        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-champagne via-brand-mocha/80 to-brand-champagne" />
+    <motion.div
+      initial={{ x: '100%' }}
+      animate={{ x: 0 }}
+      exit={{ x: '100%' }}
+      transition={{ type: "tween", duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-0 z-50 flex justify-end"
+    >
+      <div className="absolute inset-0 bg-brand-obsidian/40 backdrop-blur-sm" onClick={onClose} />
+      
+      <div className="w-full md:w-[500px] lg:w-[600px] h-full bg-brand-charcoal relative flex flex-col shadow-2xl border-l border-brand-champagne">
+        <div className="absolute top-0 bottom-0 left-0 w-[1px] bg-brand-champagne opacity-30"></div>
         
-        {/* Left Side: Elegant Text */}
-        <div className="lg:w-1/2 lg:pr-10 mb-12 lg:mb-0 relative text-center lg:text-left">
-          <Sparkles className="absolute -top-6 -left-6 w-12 h-12 text-brand-gold/30 animate-pulse" />
-          
-          <div className="inline-flex items-center justify-center lg:justify-start gap-4 mb-6">
-            <span className="text-brand-mocha uppercase tracking-[0.5em] text-[10px] sm:text-[11px] font-bold drop-shadow-sm">
-              Kindly Respond
-            </span>
-            <div className="hidden lg:block w-16 h-[1px] bg-gradient-to-r from-brand-mocha/60 to-transparent" />
-          </div>
-
-          <h2 className="text-5xl sm:text-6xl font-display text-brand-mocha tracking-tight leading-[1.1] mb-6 drop-shadow-sm">
-            Reserve <span className="italic font-light text-brand-mocha">Your</span> Seat
-          </h2>
-          
-          <p className="text-brand-sand/90 font-serif text-lg leading-relaxed mb-6">
-            Your presence means the world to us. Please kindly let us know if you will be able to join our celebration by 31 October 2026.
-          </p>
-
-          <div className="w-12 h-[1px] bg-brand-gold/50 mx-auto lg:mx-0" />
+        <div className="flex justify-between items-center p-8 md:p-12 border-b border-brand-obsidian/50">
+          <h2 className="font-serif text-3xl md:text-4xl text-brand-ivory uppercase tracking-widest font-light">RSVP</h2>
+          <button 
+            onClick={onClose}
+            className="w-12 h-12 flex items-center justify-center border border-brand-champagne/30 text-brand-champagne hover:bg-brand-champagne hover:text-brand-obsidian transition-colors duration-300 rounded-full"
+          >
+            <X size={20} />
+          </button>
         </div>
 
-        {/* Right Side: Flowing Form */}
-        <div className="lg:w-1/2 relative z-10">
-          <AnimatePresence mode="wait">
-            {status === 'success' ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="text-center py-16 px-8 bg-white/70 rounded-[2rem] border border-white shadow-xl"
-              >
-                <div className="w-24 h-24 bg-green-50/80 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner border border-green-100">
-                  <CheckCircle className="w-12 h-12 text-green-500" />
-                </div>
-                <h3 className="text-4xl font-display text-brand-mocha mb-4 tracking-tight drop-shadow-sm">With Gratitude</h3>
-                <p className="text-brand-sand/90 leading-relaxed font-serif text-lg mb-8">
-                  Your response has been warmly received. We cannot wait to celebrate with you!
-                </p>
+        <div className="flex-1 overflow-y-auto p-8 md:p-12">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+            <div className="flex flex-col gap-4">
+              <label className="font-sans text-[10px] tracking-[0.3em] text-brand-champagne uppercase">Your Name</label>
+              <input 
+                type="text" 
+                required
+                className="w-full bg-transparent border-b border-brand-ivory/20 pb-4 text-brand-ivory font-serif text-2xl md:text-3xl focus:outline-none focus:border-brand-champagne transition-colors placeholder:text-brand-ivory/20"
+                placeholder="Enter your full name"
+              />
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <label className="font-sans text-[10px] tracking-[0.3em] text-brand-champagne uppercase">Number of Guests</label>
+              <input 
+                type="number" 
+                min="1"
+                max="10"
+                required
+                className="w-full bg-transparent border-b border-brand-ivory/20 pb-4 text-brand-ivory font-serif text-2xl md:text-3xl focus:outline-none focus:border-brand-champagne transition-colors placeholder:text-brand-ivory/20"
+                placeholder="1"
+              />
+            </div>
+
+            <div className="flex flex-col gap-6 mt-4">
+              <label className="font-sans text-[10px] tracking-[0.3em] text-brand-champagne uppercase">Attendance</label>
+              
+              <div className="flex flex-col gap-4">
                 <button
-                  onClick={() => setStatus('idle')}
-                  className="px-6 py-2 rounded-full border border-brand-gold/30 text-brand-mocha font-sans text-[10px] tracking-[0.2em] uppercase hover:bg-brand-gold/10 transition-all duration-300 shadow-sm"
+                  type="button"
+                  onClick={() => setAttendance('accepts')}
+                  className={`w-full flex items-center justify-between p-6 border transition-all duration-300 ${
+                    attendance === 'accepts' 
+                      ? 'border-brand-champagne bg-brand-champagne/5 text-brand-champagne' 
+                      : 'border-brand-ivory/20 text-brand-ivory/60 hover:border-brand-champagne/50 hover:text-brand-ivory'
+                  }`}
                 >
-                  Update Response
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleSubmit}
-                className="space-y-6 bg-white/40 p-8 sm:p-10 rounded-[2.5rem] border border-white shadow-[0_15px_30px_rgba(0,0,0,0.05)]"
-              >
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] font-bold text-brand-sand mb-3 ml-2">Full Name</label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="E.g., John & Jane Doe"
-                    className="w-full bg-white/80 px-6 py-4 rounded-full border border-stone-200/60 focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-mocha/40 outline-none transition-all duration-300 font-serif italic text-lg shadow-inner placeholder:text-stone-300"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] font-bold text-brand-sand mb-3 ml-2">Number of Guests</label>
-                  <div className="relative group">
-                    <select
-                      className="w-full bg-white/80 px-6 py-4 rounded-full border border-stone-200/60 focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-mocha/40 outline-none transition-all duration-300 appearance-none font-serif italic text-lg shadow-inner text-brand-mocha cursor-pointer"
-                      value={formData.guests}
-                      onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                    >
-                      <option value="1">Just Me (1 Guest)</option>
-                      <option value="2">We are coming! (2 Guests)</option>
-                      <option value="3">3 Guests</option>
-                      <option value="4">4 Guests</option>
-                    </select>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-brand-mocha transition-transform duration-300 group-hover:scale-110">
-                      <Heart className="w-5 h-5 fill-brand-gold/30 drop-shadow-sm" />
-                    </div>
+                  <span className="font-sans text-xs tracking-[0.2em] uppercase">Accepts with pleasure</span>
+                  <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+                    attendance === 'accepts' ? 'border-brand-champagne bg-brand-champagne text-brand-obsidian' : 'border-brand-ivory/20'
+                  }`}>
+                    {attendance === 'accepts' && <Check size={12} />}
                   </div>
-                </div>
+                </button>
 
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] font-bold text-brand-sand mb-3 ml-2">Dietary Notes (Optional)</label>
-                  <textarea
-                    placeholder="We'd love to know if you have any allergies..."
-                    className="w-full bg-white/80 px-6 py-4 rounded-[2rem] border border-stone-200/60 focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-mocha/40 outline-none transition-all duration-300 h-28 resize-none font-serif italic text-lg shadow-inner placeholder:text-stone-300"
-                    value={formData.dietaryNotes}
-                    onChange={(e) => setFormData({ ...formData, dietaryNotes: e.target.value })}
-                  />
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setAttendance('declines')}
+                  className={`w-full flex items-center justify-between p-6 border transition-all duration-300 ${
+                    attendance === 'declines' 
+                      ? 'border-brand-champagne bg-brand-champagne/5 text-brand-champagne' 
+                      : 'border-brand-ivory/20 text-brand-ivory/60 hover:border-brand-champagne/50 hover:text-brand-ivory'
+                  }`}
+                >
+                  <span className="font-sans text-xs tracking-[0.2em] uppercase">Unable to attend</span>
+                  <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+                    attendance === 'declines' ? 'border-brand-champagne bg-brand-champagne text-brand-obsidian' : 'border-brand-ivory/20'
+                  }`}>
+                    {attendance === 'declines' && <Check size={12} />}
+                  </div>
+                </button>
+              </div>
+            </div>
 
-                <div className="pt-4">
-                  <button
-                    disabled={status === 'loading'}
-                    type="submit"
-                    className="w-full bg-brand-mocha text-brand-champagne py-5 rounded-full font-sans tracking-[0.3em] font-bold text-[11px] uppercase hover:bg-brand-mocha/90 transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.25)] active:scale-[0.98] flex items-center justify-center gap-3 disabled:opacity-70"
-                  >
-                    {status === 'loading' ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      'Confirm Attendance'
-                    )}
-                  </button>
-                </div>
-              </motion.form>
-            )}
-          </AnimatePresence>
+            <button 
+              type="submit"
+              disabled={!attendance}
+              className="mt-8 w-full border border-brand-champagne bg-brand-champagne text-brand-obsidian py-5 font-sans text-xs tracking-[0.3em] uppercase hover:bg-transparent hover:text-brand-champagne transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Confirm
+            </button>
+          </form>
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
-};
+}
