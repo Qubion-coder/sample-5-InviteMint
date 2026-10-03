@@ -10,56 +10,64 @@ export const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0,
+    seconds: 0
   });
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate.getTime() - now.getTime();
-      
-      const days = Math.max(0, Math.floor(difference / (1000 * 60 * 60 * 24)));
-      const hours = Math.max(0, Math.floor((difference / (1000 * 60 * 60)) % 24));
-      const minutes = Math.max(0, Math.floor((difference / 1000 / 60) % 60));
-      const seconds = Math.max(0, Math.floor((difference / 1000) % 60));
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
 
-      setTimeLeft({ days, hours, minutes, seconds });
+      if (distance < 0) {
+        clearInterval(timer);
+        return;
+      }
+
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      });
     }, 1000);
 
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  return (
-    <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-10 py-6">
-      {[
-        { label: 'Days', value: timeLeft.days },
-        { label: 'Hours', value: timeLeft.hours },
-        { label: 'Minutes', value: timeLeft.minutes },
-        { label: 'Seconds', value: timeLeft.seconds },
-      ].map((item, i) => (
-        <motion.div 
-          key={item.label}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ delay: i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center min-w-[90px] sm:min-w-[130px] relative group"
-        >
-          {/* Glass background arch */}
-          <div className="absolute inset-0 bg-white/60 backdrop-blur-md border border-brand-gold/40 shadow-[0_15px_30px_rgba(197,160,89,0.1)] rounded-[3rem_3rem_1rem_1rem] sm:rounded-[4rem_4rem_1.5rem_1.5rem] group-hover:shadow-[0_20px_40px_rgba(197,160,89,0.2)] transition-all duration-700 ease-out group-hover:-translate-y-3 pointer-events-none" />
-          
-          <div className="relative pt-10 pb-8 px-4 flex flex-col items-center w-full z-10 transition-transform duration-700 group-hover:-translate-y-3">
-            {/* Elegant number */}
-            <span className="text-5xl sm:text-6xl lg:text-7xl font-display font-medium text-brand-mocha mb-4 drop-shadow-[0_2px_4px_rgba(197,160,89,0.3)] tabular-nums tracking-wide">
-              {String(item.value).padStart(2, '0')}
-            </span>
-            {/* Divider line */}
-            <div className="w-10 h-[1.5px] bg-gradient-to-r from-transparent via-brand-mocha/50 to-transparent mb-4" />
-            {/* Label */}
-            <span className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-brand-sand font-semibold">{item.label}</span>
-          </div>
-        </motion.div>
-      ))}
+  const TimeBlock = ({ value, label }: { value: number, label: string }) => (
+    <div className="flex flex-col items-center justify-center w-20 sm:w-28">
+      <span className="font-serif text-brand-dark text-5xl sm:text-7xl font-light leading-none mb-4">
+        {String(value).padStart(2, '0')}
+      </span>
+      <span className="font-sans uppercase tracking-[0.3em] text-brand-sage-deep text-[9px] sm:text-[10px] font-semibold">
+        {label}
+      </span>
     </div>
+  );
+
+  return (
+    <section className="w-full py-32 sm:py-48 bg-brand-ivory flex flex-col items-center">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="text-center"
+      >
+        <h3 className="font-sans uppercase tracking-[0.4em] text-brand-sage-deep text-[10px] sm:text-xs font-semibold mb-16">
+          COUNTING DOWN TO FOREVER
+        </h3>
+
+        <div className="flex items-center justify-center gap-4 sm:gap-8">
+          <TimeBlock value={timeLeft.days} label="DAYS" />
+          <div className="w-[1px] h-16 sm:h-20 bg-brand-champagne/60" />
+          <TimeBlock value={timeLeft.hours} label="HOURS" />
+          <div className="w-[1px] h-16 sm:h-20 bg-brand-champagne/60" />
+          <TimeBlock value={timeLeft.minutes} label="MINUTES" />
+          <div className="w-[1px] h-16 sm:h-20 bg-brand-champagne/60" />
+          <TimeBlock value={timeLeft.seconds} label="SECONDS" />
+        </div>
+      </motion.div>
+    </section>
   );
 };

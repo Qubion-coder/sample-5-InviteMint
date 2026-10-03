@@ -1,26 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:ital,wght@0,400..1000;1,400..1000&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Emerald & Gold Color Palette */
-  --color-brand-beige: #c5a059; /* Kept old names for compatibility, mapped to gold */
-  --color-brand-beige-deep: #0b3323; /* Mapped to Emerald */
-  --color-brand-champagne: #fcf8ee;
-  --color-brand-ivory: #ffffff;
-  --color-brand-gold: #c5a059;
-  --color-brand-gold-light: #e5cd97;
-  --color-brand-mocha: #061e14; /* Deep emerald */
-  --color-brand-sand: #164f38; /* Light emerald */
+  /* The White Floral Exact Palette - Green Enhanced */
+  --color-brand-ivory: #F4F7F4;
+  --color-brand-white: #FFFFFF;
+  --color-brand-cream: #E9EFE8;
+  --color-brand-sage: #9BA792;
+  --color-brand-sage-deep: #4A5D4E;
+  --color-brand-champagne: #C8AE7A;
+  --color-brand-dark: #202D22;
 
   --font-serif: "Cormorant Garamond", serif;
-  --font-display: "Cinzel", serif;
-  --font-sans: "Montserrat", sans-serif;
-  --font-playfair: "Playfair Display", serif;
+  --font-sans: "DM Sans", sans-serif;
 }
 
 :root {
   background-color: var(--color-brand-ivory);
-  color: #292524;
+  color: var(--color-brand-dark);
 }
 
 html, body {
@@ -47,16 +44,16 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-brand-champagne);
+  background: var(--color-brand-ivory);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brand-gold);
+  background: var(--color-brand-champagne);
   border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand-mocha);
+  background: var(--color-brand-sage-deep);
 }
 
 /* Luxury Texture Utility Classes */

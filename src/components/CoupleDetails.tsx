@@ -21,7 +21,7 @@ export const CoupleDetails: React.FC = () => {
             <div className="w-12 sm:w-20 h-[1px] bg-gradient-to-l from-transparent to-brand-mocha/60" />
           </div>
           <h2 className="text-5xl sm:text-7xl font-display text-brand-mocha tracking-tight drop-shadow-sm">
-            Eleanor <span className="italic text-brand-mocha font-light mx-2">&</span> Alexander
+            Olivia <span className="italic text-brand-mocha font-light mx-2">&</span> Alexander
           </h2>
         </motion.div>
       </div>
@@ -91,7 +91,7 @@ export const CoupleDetails: React.FC = () => {
         >
           <div className="mb-4 flex flex-col items-center lg:items-start">
             <span className="text-brand-mocha uppercase tracking-[0.4em] text-[10px] font-bold mb-3 block">The Bride</span>
-            <h3 className="text-4xl sm:text-5xl font-display text-brand-mocha mb-2 drop-shadow-sm">Eleanor</h3>
+            <h3 className="text-4xl sm:text-5xl font-display text-brand-mocha mb-2 drop-shadow-sm">Olivia</h3>
             <p className="text-brand-sand/90 font-serif italic text-base sm:text-lg">Daughter of Mr. Charles Kensington<br />& Mrs. Victoria Kensington</p>
           </div>
           <div className="hidden lg:flex justify-start mt-8">
